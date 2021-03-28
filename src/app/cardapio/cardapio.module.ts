@@ -19,6 +19,7 @@ import {RippleModule} from 'primeng/ripple';
 import { CardapioComponent } from './cardapio.component';
 import { GridItemComponent } from './componentes/grid-item/grid-item.component';
 import { ListItemComponent } from './componentes/list-item/list-item.component';
+import { CommonModule } from '@angular/common';
 
 const ROUTES = [
  {
@@ -34,6 +35,7 @@ const ROUTES = [
   ],
   imports: [
     RouterModule.forChild(ROUTES),
+    CommonModule,
     DropdownModule,
     PanelModule,
     DialogModule,

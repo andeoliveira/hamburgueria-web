@@ -8,7 +8,7 @@
       <span [class]="'lanche-badge status-' + lancheValorPromocao.lanche.nome.toLowerCase()">{{lancheValorPromocao.lanche.nome}}</span>
     </div>
     <div class="lanche-grid-item-content">
-      <img [src]="lancheValorPromocao.lanche.urlimagem" [alt]="lancheValorPromocao.lanche.nome"/>
+      <img *ngIf="lancheValorPromocao.lanche.urlimagem" [src]="lancheValorPromocao.lanche.urlimagem" [alt]="lancheValorPromocao.lanche.nome"/>
       <div class="lanche-name">{{lancheValorPromocao.lanche.nome}}</div>
       <div class="lanche-description">{{descricao}}</div>
       <p-rating [ngModel]="lancheValorPromocao.lanche.nome" [readonly]="true" [cancel]="false"></p-rating>
