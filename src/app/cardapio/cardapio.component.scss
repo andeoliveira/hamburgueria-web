@@ -5,21 +5,21 @@
       font-weight: normal;
   }
 
-  .lanche-nome {
+  .item-nome {
       font-size: 1.5rem;
       font-weight: 700;
   }
 
-  .lanche-descricao {
+  .item-descricao {
       margin: 0 0 1rem 0;
   }
 
-  .lanche-categoria-icon {
+  .item-categoria-icon {
       vertical-align: middle;
       margin-right: .5rem;
   }
 
-  .lanche-categoria {
+  .item-categoria {
       font-weight: 600;
       vertical-align: middle;
   }
@@ -43,7 +43,7 @@ h2 {
 
 
 @media screen and (max-width: 576px) {
-:host ::ng-deep .lanche-list-item {
+:host ::ng-deep .item-list-item {
   flex-direction: column;
   align-items: center;
 
@@ -52,20 +52,20 @@ h2 {
     margin: 2rem 0;
   }
 
-  .lanche-list-detail {
+  .item-list-detail {
     text-align: center;
   }
 
-  .lanche-price {
+  .item-price {
     align-self: center;
   }
 
-  .lanche-list-action {
+  .item-list-action {
     display: flex;
     flex-direction: column;
   }
 
-  .lanche-list-action {
+  .item-list-action {
     margin-top: 2rem;
     flex-direction: row;
     justify-content: space-between;

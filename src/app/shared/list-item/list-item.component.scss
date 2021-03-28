@@ -1,4 +1,4 @@
-.lanche-list-item {
+.item-list-item {
   display: flex;
   align-items: center;
   padding: 1rem;
@@ -11,19 +11,19 @@
       margin-right: 2rem;
   }
 
-  .lanche-list-detalhe {
+  .item-list-detalhe {
       flex: 1 1 0;
       text-align: left;
   }
 
-  .lanche-preco {
+  .item-preco {
       font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: .3rem;
       align-self: flex-end;
   }
 
-  .lanche-list-action {
+  .item-list-action {
       display: flex;
       flex-direction: column;
   }

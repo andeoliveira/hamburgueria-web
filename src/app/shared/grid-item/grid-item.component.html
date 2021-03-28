@@ -1,25 +1,25 @@
 
-  <form [formGroup]="form" *ngIf="itemDataview" class="lanche-grid-item card" style="min-height: 94%;">
-    <div class="lanche-grid-item-top">
+  <form [formGroup]="form" *ngIf="itemDataview" class="item-grid-item card" style="min-height: 94%;">
+    <div class="item-grid-item-top">
       <div>
-        <i class="pi pi-tag lanche-categoria-icon"></i>
-        <span class="lanche-categoria">{{itemDataview.valor | currency:'BRL'}}</span>
+        <i class="pi pi-tag item-categoria-icon"></i>
+        <span class="item-categoria">{{itemDataview.valor | currency:'BRL'}}</span>
 
       </div>
-      <span [class]="'lanche-badge status-' + itemDataview.titulo">{{itemDataview.titulo}}</span>
+      <span [class]="'item-badge status-' + itemDataview.titulo">{{itemDataview.titulo}}</span>
     </div>
-    <div class="lanche-grid-item-content">
+    <div class="item-grid-item-content">
       <img *ngIf="itemDataview.imagem" [src]="itemDataview.imagem" [alt]="itemDataview.titulo"/>
-      <div class="lanche-nome">{{itemDataview.titulo}}</div>
-      <div class="lanche-descricao">{{itemDataview.descricao}}</div>
+      <div class="item-nome">{{itemDataview.titulo}}</div>
+      <div class="item-descricao">{{itemDataview.descricao}}</div>
 
     </div>
-    <div class="lanche-grid-item-bottom">
+    <div class="item-grid-item-bottom">
 
         <div class="p-field p-col-12 p-lg-12 p-md-12" style="text-align: center;">
           <label for="minmax" class="p-text-center p-lg-12" >Quantidade:</label>
           <p-inputNumber class="p-lg-12" formControlName="itensQuantidade" spinnerMode="horizontal" inputId="minmax" inputId="minmax" [showButtons]="true" [min]="0" [max]="100"></p-inputNumber>
-          <p><span class="lanche-preco p-lg-12">Subtotal: {{form.get('subtotal').value | currency:'BRL'}}</span></p>
+          <p><span class="item-preco p-lg-12">Subtotal: {{form.get('subtotal').value | currency:'BRL'}}</span></p>
         </div>
 
     </div>

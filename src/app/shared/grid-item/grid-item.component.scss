@@ -1,9 +1,9 @@
-.lanche-grid-item {
+.item-grid-item {
   margin: .5em;
   border: 1px solid #dee2e6;
 
-  .lanche-grid-item-top,
-  .lanche-grid-item-bottom {
+  .item-grid-item-top,
+  .item-grid-item-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -15,11 +15,11 @@
       margin: 2rem 0;
   }
 
-  .lanche-grid-item-content {
+  .item-grid-item-content {
       text-align: center;
   }
 
-  .lanche-preco {
+  .item-preco {
       font-size: 1.1rem;
       font-weight: 600;
   }
@@ -37,7 +37,7 @@
 }
 
 @media screen and (max-width: 576px) {
-:host ::ng-deep .lanche-list-item {
+:host ::ng-deep .item-list-item {
   flex-direction: column;
   align-items: center;
 
@@ -46,20 +46,20 @@
     margin: 2rem 0;
   }
 
-  .lanche-list-detail {
+  .item-list-detail {
     text-align: center;
   }
 
-  .lanche-preco {
+  .item-preco {
     align-self: center;
   }
 
-  .lanche-list-action {
+  .item-list-action {
     display: flex;
     flex-direction: column;
   }
 
-  .lanche-list-action {
+  .item-list-action {
     margin-top: 2rem;
     flex-direction: row;
     justify-content: space-between;
