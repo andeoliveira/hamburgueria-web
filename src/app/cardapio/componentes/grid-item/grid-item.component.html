@@ -14,7 +14,7 @@
       <p-rating [ngModel]="lancheValorPromocao.lanche.nome" [readonly]="true" [cancel]="false"></p-rating>
     </div>
     <div class="lanche-grid-item-bottom">
-        <span class="lanche-preco">R$ {{lancheValorPromocao.valor}}</span>
+        <span class="lanche-preco">{{lancheValorPromocao.valor | currency:'BRL':true:'1.2-2'}}</span>
         <p-button icon="pi pi-shopping-cart" [disabled]="lancheValorPromocao.lanche.nome === 'OUTOFSTOCK'"></p-button>
     </div>
   </div>
