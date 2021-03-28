@@ -1,4 +1,4 @@
-import { ItemDataview } from './itens/item-dataview';
+import { ItemDataview } from '../itens/item-dataview';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { distinctUntilChanged } from 'rxjs/operators';

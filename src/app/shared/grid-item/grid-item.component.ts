@@ -1,5 +1,5 @@
-import { ItemDataview } from 'src/app/shared/list-item/itens/item-dataview';
 
+import { ItemDataview } from '../itens/item-dataview';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { FormGroup, FormControl } from '@angular/forms';
 /*Angular Imports */
@@ -13,7 +13,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GridItemComponent implements OnInit {
 
-  @Input()itemDataView:any;
+  @Input() itemDataview: ItemDataview;
 
   form = new FormGroup({});
 
@@ -27,7 +27,7 @@ export class GridItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.itemDataView)
+    console.log(this.itemDataview)
     this.form.get('subtotal').setValue(0);
   }
 
@@ -42,7 +42,7 @@ export class GridItemComponent implements OnInit {
   }
 
   calcularValorSubtotal(quantidade:number) {
-    this.form.get('subtotal').setValue(quantidade * this.itemDataView.valor);
+    this.form.get('subtotal').setValue(quantidade * this.itemDataview.valor);
   }
 
 }

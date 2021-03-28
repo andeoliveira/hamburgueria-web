@@ -1,7 +1,8 @@
 <!-- Componente DataView - Lista de Registros-->
 <form [formGroup]="form" *ngIf="lanches && lanches.length > 0">
+
   <p-dataView #dv [value]="lanches" [paginator]="false" [rows]="9" filterBy="lanche.nome" [loading]="carregando"
-  [sortField]="campoOrdenacao" [sortOrder]="ordenacao" layout="grid" emptyMessage="Não foram encontrados registros.">
+  [sortField]="campoOrdenacao" [sortOrder]="ordenacao" layout="list" emptyMessage="Não foram encontrados registros.">
 
   <ng-template pTemplate="header">
     <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
@@ -25,7 +26,7 @@
 
   <ng-template let-lanchevalorpromo pTemplate="gridItem">
     <!-- Componente de visualização em Grid - vários por linha-->
-    <app-grid-item [itemDataView]="converterParaItemDataView(lanchevalorpromo)" class="p-col-12 p-md-4"></app-grid-item>
+    <app-grid-item [itemDataview]="converterParaItemDataView(lanchevalorpromo)" class="p-col-12 p-md-4"></app-grid-item>
   </ng-template>
 
   </p-dataView>

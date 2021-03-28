@@ -5,10 +5,7 @@
     <app-lanche-pronto *ngIf="lanchesProntos && lanchesProntos.length > 0" [lanches]="lanchesProntos"></app-lanche-pronto>
   </div>
 
-  <div *ngIf="lanchePersonalizado">
-    <div class="lanche-personalizado-header">
-      <h3 class="p-text-center">Personalize o Lanche:</h3>
-    </div>
-    <!--app-lanche-personalizado [lancheValorPromocao]="lanchePersonalizado"></app-lanche-personalizado -->
+  <div>
+    <app-lanche-personalizado  *ngIf="lanchePersonalizado && lanchePersonalizado.lanche" [lancheValorPromocao]="lanchePersonalizado"></app-lanche-personalizado>
   </div>
 </form>

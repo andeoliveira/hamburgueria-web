@@ -4,5 +4,5 @@ export interface ItemDataview {
   valor?: number;
   subtotal?: number;
   quantidadeItens?: number;
-  imagem?: string;
+  imagem?: String;
 }

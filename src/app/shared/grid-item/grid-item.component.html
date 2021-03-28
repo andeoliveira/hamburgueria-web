@@ -1,17 +1,17 @@
 
-  <form [formGroup]="form" class="lanche-grid-item card" style="min-height: 98%;">
+  <form [formGroup]="form" *ngIf="itemDataview" class="lanche-grid-item card" style="min-height: 94%;">
     <div class="lanche-grid-item-top">
       <div>
         <i class="pi pi-tag lanche-categoria-icon"></i>
-        <span class="lanche-categoria">{{itemDataView.valor | currency:'BRL'}}</span>
+        <span class="lanche-categoria">{{itemDataview.valor | currency:'BRL'}}</span>
 
       </div>
-      <span [class]="'lanche-badge status-' + itemDataView.titulo">{{itemDataView.titulo}}</span>
+      <span [class]="'lanche-badge status-' + itemDataview.titulo">{{itemDataview.titulo}}</span>
     </div>
     <div class="lanche-grid-item-content">
-      <img *ngIf="itemDataView.imagem" [src]="itemDataView.imagem" [alt]="itemDataView.titulo"/>
-      <div class="lanche-nome">{{itemDataView.titulo}}</div>
-      <div class="lanche-descricao">{{itemDataView.descricao}}</div>
+      <img *ngIf="itemDataview.imagem" [src]="itemDataview.imagem" [alt]="itemDataview.titulo"/>
+      <div class="lanche-nome">{{itemDataview.titulo}}</div>
+      <div class="lanche-descricao">{{itemDataview.descricao}}</div>
 
     </div>
     <div class="lanche-grid-item-bottom">

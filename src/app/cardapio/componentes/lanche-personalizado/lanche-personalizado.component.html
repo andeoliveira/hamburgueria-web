@@ -1,7 +1,9 @@
-<form [formGroup]="form" class="card">
-
+<form [formGroup]="form" class="card" *ngIf="lancheValorPromocao && lancheValorPromocao.lanche && ingredientes && ingredientes.length > 0">
+  <div class="lanche-personalizado-header">
+    <h3 class="p-text-center">Personalize o Lanche:</h3>
+  </div>
   <!-- Componente DataView - Lista de Registros-->
-  <p-dataView #dv [value]="ingredientes" [paginator]="false" [rows]="9" filterBy="nome" [loading]="carregando"
+  <p-dataView #dv  [value]="ingredientes" [paginator]="false" [rows]="9" filterBy="nome" [loading]="carregando"
     [sortField]="campoOrdenacao" [sortOrder]="ordenacao" layout="list" emptyMessage="Não foram encontrados registros.">
 
     <ng-template pTemplate="header">
@@ -21,12 +23,15 @@
 
     <ng-template let-ingrediente pTemplate="listItem">
       <!-- Componente de visualização em Lista - único por linha-->
-      <!--app-list-item [lancheValorPromocao]="lanchevalorpromo" class="p-col-12"></app-list-item -->
+      <app-list-item [itemDataview]="converterParaItemDataView(ingrediente)" class="p-col-12"></app-list-item>
     </ng-template>
 
     <ng-template let-ingrediente pTemplate="gridItem">
-       <!-- Componente de visualização em Grid - vários por linha-->
-      <!--app-grid-item *ngIf="lanchevalorpromo.lanche.nome !== 'Lanche Personalizado'" [lancheValorPromocao]="lanchevalorpromo" class="p-col-12 p-md-4"></app-grid-item-->
+       <!-- Componente de visualização em Grid - vários por linha -->
+       <div *ngIf="!carregando && ingrediente && this.ingredientes.length > 0">
+        <app-grid-item [itemDataview]="converterParaItemDataView(ingrediente)" class="p-col-12 p-md-4"></app-grid-item>
+       </div>
+
     </ng-template>
 
   </p-dataView>

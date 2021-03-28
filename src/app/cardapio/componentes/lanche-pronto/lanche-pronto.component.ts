@@ -2,7 +2,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { LancheValorPromocao } from './../../../lanche/itens/lanche-valor-promocao';
 import { Component, Input, OnInit } from '@angular/core';
-import { ItemDataview } from 'src/app/shared/list-item/itens/item-dataview';
+import { ItemDataview } from 'src/app/shared/itens/item-dataview';
 
 @Component({
   selector: 'app-lanche-pronto',

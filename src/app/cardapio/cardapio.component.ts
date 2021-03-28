@@ -15,7 +15,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class CardapioComponent implements OnInit {
 
   lanchesProntos: LancheValorPromocao [] = [];
-  lanchePersonalizado: LancheValorPromocao;
+  lanchePersonalizado: LancheValorPromocao = {};
   carregando:Boolean = false;
 
   form = new FormGroup({});
@@ -53,8 +53,10 @@ export class CardapioComponent implements OnInit {
 
   setarLanches(lanches: LancheValorPromocao[]) {
     let idx = lanches.findIndex(i => i.lanche.nome === 'Lanche Personalizado');
+    console.log(idx)
     if (idx) {
       this.lanchePersonalizado = lanches[idx];
+      console.log(this.lanchePersonalizado)
     } else {
       this.lanchePersonalizado = {};
     }
