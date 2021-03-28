@@ -1,6 +1,8 @@
+import { Ingrediente } from './../../ingrediente/modelos/ingrediente';
+
 export interface Lanche {
   id?: number;
   nome?: String;
-  ingredientes?: any[];
-  urlImagem?: any;
+  ingredientes?: Ingrediente[];
+  urlimagem?: any;
 }

@@ -1,11 +1,15 @@
+import { Cardapio } from './itens/Cardapio';
 import { LancheValorPromocao } from './../lanche/itens/lanche-valor-promocao';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem, PrimeNGConfig } from 'primeng/api';
+import { CardapioService } from './services/cardapio.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cardapio',
   templateUrl: './cardapio.component.html',
-  styleUrls: ['./cardapio.component.scss']
+  styleUrls: ['./cardapio.component.scss'],
+  providers: [CardapioService]
 })
 export class CardapioComponent implements OnInit {
 
@@ -17,33 +21,9 @@ export class CardapioComponent implements OnInit {
 
   sortField: string;
 
-  constructor(private primengConfig: PrimeNGConfig) { }
+  constructor(private primengConfig: PrimeNGConfig, private cardapioService: CardapioService) { }
 
   ngOnInit(): void {
-
-
-    this.lanches = [
-      {
-        lanche : {nome: 'X-Bacon'},
-        valor: 50.0
-      },
-      {
-        lanche : {nome: 'X-Bacon'},
-        valor: 10.0
-      },
-      {
-        lanche : {nome: 'X-Burger'},
-        valor: 11.0
-      },
-      {
-        lanche : {nome: 'X-Egg Bacon'},
-        valor: 11.0
-      },
-      {
-        lanche : {nome : 'Personaliazdo'},
-        valor: 0
-      }
-    ]
 
     this.opcoesOrdenacao = [
       {label: 'Maior preço', value: '!valor'},
@@ -52,6 +32,18 @@ export class CardapioComponent implements OnInit {
 
     this.primengConfig.ripple = true;
 
+    this.carregarTodosLanches();
+
+  }
+
+  carregarTodosLanches() {
+    this.cardapioService.carregarCardapio()
+      .pipe(take(1))
+      .subscribe((cardapio:Cardapio) => {
+        this.lanches = cardapio.lanches
+      }, error => {
+        console.error(error);
+      })
   }
 
   onSortChange(event) {
