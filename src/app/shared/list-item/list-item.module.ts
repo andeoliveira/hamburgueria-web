@@ -1,7 +1,4 @@
-import { GridItemModule } from './../shared/grid-item/grid-item.module';
-
 /* Angular Imports */
-import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
@@ -19,29 +16,13 @@ import {RatingModule} from 'primeng/rating';
 import {RippleModule} from 'primeng/ripple';
 import {InputNumberModule} from 'primeng/inputnumber';
 
-/* Componentes Compartilhados */
-import { ListItemModule } from './../shared/list-item/list-item.module';
+import { ListItemComponent } from './list-item.component';
 
-/* Componentes da Regra de Negócio */
-import { CardapioComponent } from './cardapio.component';
-import { LanchePersonalizadoComponent } from './componentes/lanche-personalizado/lanche-personalizado.component';
-import { LancheProntoComponent } from './componentes/lanche-pronto/lanche-pronto.component';
-
-
-const ROUTES = [
- {
-   path:'',
-    component: CardapioComponent
- }
-]
 @NgModule({
   declarations: [
-    CardapioComponent,
-    LanchePersonalizadoComponent,
-    LancheProntoComponent
+    ListItemComponent
   ],
   imports: [
-    RouterModule.forChild(ROUTES),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -53,16 +34,13 @@ const ROUTES = [
     ButtonModule,
     RippleModule,
     HttpClientModule,
-    RatingModule,
-    InputNumberModule,
-    ListItemModule,
-    GridItemModule
+    InputNumberModule
 
   ],
   exports:[
-    CardapioComponent
+    ListItemComponent
   ],
   providers: []
 })
 
-export class CardapioModule { }
+export class ListItemModule { }

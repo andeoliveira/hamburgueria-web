@@ -1,23 +1,14 @@
-<div class="card">
-  <p-dataView #dv [value]="lanches" [paginator]="true" [rows]="9" filterBy="nome" [sortField]="sortField" [sortOrder]="sortOrder" layout="list" emptyMessage="Não foram encontrados registros.">
+<form [formGroup]="form" class="card">
 
-      <ng-template pTemplate="header">
-          <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
-              <p-dropdown [options]="opcoesOrdenacao" [(ngModel)]="sortKey" placeholder="Ordernar por preço" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
-              <span class="p-input-icon-left p-mb-2 p-mb-md-0">
-                  <i class="pi pi-search"></i>
-                  <input type="search" pInputText placeholder="Procurar por lanche" (input)="dv.filter($event.target.value)">
-              </span>
-              <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-          </div>
-      </ng-template>
+  <div class="p-text-center p-text-normal">
+    <h2 class="p-text-bold">Cardápio</h2>
+    <app-lanche-pronto *ngIf="lanchesProntos && lanchesProntos.length > 0" [lanches]="lanchesProntos"></app-lanche-pronto>
+  </div>
 
-      <ng-template let-lanche pTemplate="listItem">
-        <app-list-item [lancheValorPromocao]="lanche" class="p-col-12"></app-list-item>
-      </ng-template>
-
-      <ng-template let-lanche pTemplate="gridItem">
-        <app-grid-item [lancheValorPromocao]="lanche" class="p-col-12 p-md-4"></app-grid-item>
-      </ng-template>
-  </p-dataView>
-</div>
+  <div *ngIf="lanchePersonalizado">
+    <div class="lanche-personalizado-header">
+      <h3 class="p-text-center">Personalize o Lanche:</h3>
+    </div>
+    <!--app-lanche-personalizado [lancheValorPromocao]="lanchePersonalizado"></app-lanche-personalizado -->
+  </div>
+</form>

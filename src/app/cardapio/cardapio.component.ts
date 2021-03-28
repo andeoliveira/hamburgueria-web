@@ -1,9 +1,10 @@
 import { Cardapio } from './itens/Cardapio';
 import { LancheValorPromocao } from './../lanche/itens/lanche-valor-promocao';
 import { Component, OnInit } from '@angular/core';
-import { SelectItem, PrimeNGConfig } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { CardapioService } from './services/cardapio.service';
 import { take } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-cardapio',
@@ -13,50 +14,52 @@ import { take } from 'rxjs/operators';
 })
 export class CardapioComponent implements OnInit {
 
-  lanches: LancheValorPromocao [] = [];
+  lanchesProntos: LancheValorPromocao [] = [];
+  lanchePersonalizado: LancheValorPromocao;
+  carregando:Boolean = false;
 
-  opcoesOrdenacao: SelectItem[];
+  form = new FormGroup({});
 
-  sortOrder: number;
-
-  sortField: string;
-
-  constructor(private primengConfig: PrimeNGConfig, private cardapioService: CardapioService) { }
+  constructor(private primengConfig: PrimeNGConfig, private cardapioService: CardapioService) {
+    this.form = new FormGroup({
+      itemOrdem: new FormControl('')
+    });
+   }
 
   ngOnInit(): void {
 
-    this.opcoesOrdenacao = [
-      {label: 'Maior preço', value: '!valor'},
-      {label: 'Menor preço', value: 'valor'}
-    ];
-
     this.primengConfig.ripple = true;
-
     this.carregarTodosLanches();
 
   }
 
   carregarTodosLanches() {
+
+    this.carregando = true;
+
     this.cardapioService.carregarCardapio()
       .pipe(take(1))
       .subscribe((cardapio:Cardapio) => {
-        this.lanches = cardapio.lanches
+        this.setarLanches(cardapio.lanches);
       }, error => {
         console.error(error);
-      })
+      },() => {
+        this.carregando = false;
+      });
+
+
   }
 
-  onSortChange(event) {
-    let value = event.value;
 
-    if (value.indexOf('!') === 0) {
-        this.sortOrder = -1;
-        this.sortField = value.substring(1, value.length);
+  setarLanches(lanches: LancheValorPromocao[]) {
+    let idx = lanches.findIndex(i => i.lanche.nome === 'Lanche Personalizado');
+    if (idx) {
+      this.lanchePersonalizado = lanches[idx];
+    } else {
+      this.lanchePersonalizado = {};
     }
-    else {
-        this.sortOrder = 1;
-        this.sortField = value;
-    }
-}
+    this.lanchesProntos = lanches.filter(lanche => lanche.lanche.nome!== 'Lanche Personalizado');
+  }
+
 
 }

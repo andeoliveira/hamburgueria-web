@@ -1,0 +1,32 @@
+<!-- Componente DataView - Lista de Registros-->
+<form [formGroup]="form" *ngIf="lanches && lanches.length > 0">
+  <p-dataView #dv [value]="lanches" [paginator]="false" [rows]="9" filterBy="lanche.nome" [loading]="carregando"
+  [sortField]="campoOrdenacao" [sortOrder]="ordenacao" layout="grid" emptyMessage="Não foram encontrados registros.">
+
+  <ng-template pTemplate="header">
+    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+
+      <p-dropdown [options]="opcoesOrdenacao" formControlName="itemOrdem" placeholder="Ordernar por preço" (onChange)="ordenacaoTipo($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+
+      <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+        <i class="pi pi-search"></i>
+        <input type="search" pInputText placeholder="Procurar por nome" (input)="dv.filter($event.target.value)">
+      </span>
+
+      <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+
+    </div>
+  </ng-template>
+
+  <ng-template let-lanchevalorpromo pTemplate="listItem">
+    <!-- Componente de visualização em Lista - único por linha-->
+    <app-list-item [itemDataview]="converterParaItemDataView(lanchevalorpromo)" class="p-col-12"></app-list-item>
+  </ng-template>
+
+  <ng-template let-lanchevalorpromo pTemplate="gridItem">
+    <!-- Componente de visualização em Grid - vários por linha-->
+    <app-grid-item [itemDataView]="converterParaItemDataView(lanchevalorpromo)" class="p-col-12 p-md-4"></app-grid-item>
+  </ng-template>
+
+  </p-dataView>
+</form>

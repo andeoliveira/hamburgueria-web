@@ -1,0 +1,27 @@
+
+  <form [formGroup]="form" class="lanche-grid-item card" style="min-height: 98%;">
+    <div class="lanche-grid-item-top">
+      <div>
+        <i class="pi pi-tag lanche-categoria-icon"></i>
+        <span class="lanche-categoria">{{itemDataView.valor | currency:'BRL'}}</span>
+
+      </div>
+      <span [class]="'lanche-badge status-' + itemDataView.titulo">{{itemDataView.titulo}}</span>
+    </div>
+    <div class="lanche-grid-item-content">
+      <img *ngIf="itemDataView.imagem" [src]="itemDataView.imagem" [alt]="itemDataView.titulo"/>
+      <div class="lanche-nome">{{itemDataView.titulo}}</div>
+      <div class="lanche-descricao">{{itemDataView.descricao}}</div>
+
+    </div>
+    <div class="lanche-grid-item-bottom">
+
+        <div class="p-field p-col-12 p-lg-12 p-md-12" style="text-align: center;">
+          <label for="minmax" class="p-text-center p-lg-12" >Quantidade:</label>
+          <p-inputNumber class="p-lg-12" formControlName="itensQuantidade" spinnerMode="horizontal" inputId="minmax" inputId="minmax" [showButtons]="true" [min]="0" [max]="100"></p-inputNumber>
+          <p><span class="lanche-preco p-lg-12">Subtotal: {{form.get('subtotal').value | currency:'BRL'}}</span></p>
+        </div>
+
+    </div>
+  </form>
+
