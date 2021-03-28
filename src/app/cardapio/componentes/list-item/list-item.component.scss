@@ -1,0 +1,36 @@
+.lanche-list-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+
+  img {
+      width: 150px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin-right: 2rem;
+  }
+
+  .lanche-list-detail {
+      flex: 1 1 0;
+  }
+
+  .p-rating {
+      margin: 0 0 .5rem 0;
+  }
+
+  .lanche-preco {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+      align-self: flex-end;
+  }
+
+  .lanche-list-action {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .p-button {
+      margin-bottom: .5rem;
+  }
+}

@@ -1,0 +1,16 @@
+
+  <div class="lanche-list-item">
+    <img [src]="lancheValorPromocao.lanche.urlImagem" [alt]="lancheValorPromocao.lanche.nome"/>
+    <div class="lanche-list-detail">
+      <div class="lanche-name">{{lancheValorPromocao.lanche.nome}}</div>
+      <div class="lanche-description">{{lancheValorPromocao.lanche.nome}}</div>
+      <p-rating [ngModel]="lancheValorPromocao.lanche.nome" [readonly]="true" [cancel]="false"></p-rating>
+      <i class="pi pi-tag lanche-category-icon"></i><span class="lanche-category">{{lancheValorPromocao.lanche.nome}}</span>
+    </div>
+    <div class="lanche-list-action">
+        <span class="lanche-preco">${{lancheValorPromocao.valor}}</span>
+        <p-button icon="pi pi-shopping-cart" label="Add to Cart" [disabled]="lancheValorPromocao.lanche.nome === 'OUTOFSTOCK'"></p-button>
+        <span [class]="'lanche-badge status-' + lancheValorPromocao.lanche.nome.toLowerCase()">{{lancheValorPromocao.lanche.nome}}</span>
+    </div>
+  </div>
+

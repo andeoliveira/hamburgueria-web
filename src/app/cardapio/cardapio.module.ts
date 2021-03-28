@@ -17,6 +17,8 @@ import {RippleModule} from 'primeng/ripple';
 
 /* Componentes */
 import { CardapioComponent } from './cardapio.component';
+import { GridItemComponent } from './componentes/grid-item/grid-item.component';
+import { ListItemComponent } from './componentes/list-item/list-item.component';
 
 const ROUTES = [
  {
@@ -26,7 +28,9 @@ const ROUTES = [
 ]
 @NgModule({
   declarations: [
-    CardapioComponent
+    CardapioComponent,
+    GridItemComponent,
+    ListItemComponent
   ],
   imports: [
     RouterModule.forChild(ROUTES),

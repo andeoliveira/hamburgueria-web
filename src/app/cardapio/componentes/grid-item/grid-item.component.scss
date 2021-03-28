@@ -1,30 +1,28 @@
-:host ::ng-deep {
+.lanche-grid-item {
+  margin: .5em;
+  border: 1px solid #dee2e6;
 
-  .p-dropdown {
-      width: 14rem;
-      font-weight: normal;
+  .lanche-grid-item-top,
+  .lanche-grid-item-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
   }
 
-  .lanche-name {
+  img {
+      width: 75%;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin: 2rem 0;
+  }
+
+  .lanche-grid-item-content {
+      text-align: center;
+  }
+
+  .lanche-preco {
       font-size: 1.5rem;
-      font-weight: 700;
-  }
-
-  .lanche-description {
-      margin: 0 0 1rem 0;
-  }
-
-  .lanche-category-icon {
-      vertical-align: middle;
-      margin-right: .5rem;
-  }
-
-  .lanche-category {
       font-weight: 600;
-      vertical-align: middle;
   }
-
-
 }
 
 .card {
@@ -48,7 +46,7 @@
     text-align: center;
   }
 
-  .lanche-price {
+  .lanche-preco {
     align-self: center;
   }
 

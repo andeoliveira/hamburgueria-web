@@ -1,3 +1,4 @@
+import { LancheValorPromocao } from './../lanche/itens/lanche-valor-promocao';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem, PrimeNGConfig } from 'primeng/api';
 
@@ -8,7 +9,7 @@ import { SelectItem, PrimeNGConfig } from 'primeng/api';
 })
 export class CardapioComponent implements OnInit {
 
-  lanches: any = [];
+  lanches: LancheValorPromocao [] = [];
 
   opcoesOrdenacao: SelectItem[];
 
@@ -22,11 +23,26 @@ export class CardapioComponent implements OnInit {
 
 
     this.lanches = [
-      {nome: 'X-Bacon', valor: '50.0'},
-      {nome: 'X-EGG', valor: '10.0'},
-      {nome: 'X-Burger', valor: '11.0'},
-      {nome: 'X-Egg Bacon', valor: '11.0'},
-      {nome: 'Personalizado', valor: ''}
+      {
+        lanche : {nome: 'X-Bacon'},
+        valor: 50.0
+      },
+      {
+        lanche : {nome: 'X-Bacon'},
+        valor: 10.0
+      },
+      {
+        lanche : {nome: 'X-Burger'},
+        valor: 11.0
+      },
+      {
+        lanche : {nome: 'X-Egg Bacon'},
+        valor: 11.0
+      },
+      {
+        lanche : {nome : 'Personaliazdo'},
+        valor: 0
+      }
     ]
 
     this.opcoesOrdenacao = [
