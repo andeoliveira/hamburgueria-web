@@ -1,10 +1,10 @@
 
+/*Angular Imports */
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+
 import { ItemDataview } from '../itens/item-dataview';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { FormGroup, FormControl } from '@angular/forms';
-/*Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
-
 
 @Component({
   selector: 'app-grid-item',
@@ -14,6 +14,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class GridItemComponent implements OnInit {
 
   @Input() itemDataview: ItemDataview;
+  @Output() subtotalEvent: EventEmitter<ItemDataview> = new EventEmitter<ItemDataview>();
 
   form = new FormGroup({});
 
@@ -27,22 +28,28 @@ export class GridItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.itemDataview)
     this.form.get('subtotal').setValue(0);
   }
 
-  verificarQuantidadeAdd() {
+  verificarQuantidadeAdd(): void{
 
     this.form.get('itensQuantidade').valueChanges
       .pipe(distinctUntilChanged())
       .subscribe(item => {
-        this.calcularValorSubtotal(item)
+        this.calcularValorSubtotal(item);
       });
 
   }
 
-  calcularValorSubtotal(quantidade:number) {
+  calcularValorSubtotal(quantidade:number): void{
     this.form.get('subtotal').setValue(quantidade * this.itemDataview.valor);
+    this.emitirItemTotal();
+  }
+
+  emitirItemTotal(): void{
+    this.itemDataview.quantidadeItens = this.form.get('itensQuantidade').value;
+    this.itemDataview.subtotal = this.form.get('subtotal').value;
+    this.subtotalEvent.emit(this.itemDataview);
   }
 
 }

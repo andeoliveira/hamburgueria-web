@@ -33,7 +33,7 @@ export class CardapioComponent implements OnInit {
 
   }
 
-  carregarTodosLanches() {
+  carregarTodosLanches() : void {
 
     this.carregando = true;
 
@@ -51,16 +51,17 @@ export class CardapioComponent implements OnInit {
   }
 
 
-  setarLanches(lanches: LancheValorPromocao[]) {
+  setarLanches(lanches: LancheValorPromocao[]) : void {
+
     let idx = lanches.findIndex(i => i.lanche.nome === 'Lanche Personalizado');
-    console.log(idx)
     if (idx) {
       this.lanchePersonalizado = lanches[idx];
-      console.log(this.lanchePersonalizado)
     } else {
       this.lanchePersonalizado = {};
     }
+
     this.lanchesProntos = lanches.filter(lanche => lanche.lanche.nome!== 'Lanche Personalizado');
+
   }
 
 

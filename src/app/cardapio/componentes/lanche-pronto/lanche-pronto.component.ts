@@ -58,7 +58,8 @@ export class LancheProntoComponent implements OnInit {
       subtotal : 0,
       titulo :lanche.lanche.nome,
       valor :lanche.valor,
-      imagem : lanche.lanche.urlimagem
+      imagem : lanche.lanche.urlimagem,
+      itemId : lanche.lanche.id
     };
 
     return itemDataview;

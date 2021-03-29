@@ -23,15 +23,12 @@
 
     <ng-template let-ingrediente pTemplate="listItem">
       <!-- Componente de visualização em Lista - único por linha-->
-      <app-list-item [itemDataview]="converterParaItemDataView(ingrediente)" class="p-col-12"></app-list-item>
+      <app-list-item [itemDataview]="converterParaItemDataView(ingrediente)" (subtotalEvent)="subtotal($event)" class="p-col-12"></app-list-item>
     </ng-template>
 
     <ng-template let-ingrediente pTemplate="gridItem">
-       <!-- Componente de visualização em Grid - vários por linha -->
-       <div *ngIf="!carregando && ingrediente && this.ingredientes.length > 0">
-        <app-grid-item [itemDataview]="converterParaItemDataView(ingrediente)" class="p-col-12 p-md-4"></app-grid-item>
-       </div>
-
+      <!-- Componente de visualização em Grid - vários por linha -->
+      <app-grid-item [itemDataview]="converterParaItemDataView(ingrediente)" (subtotalEvent)="subtotal($event)" class="p-col-12 p-md-4"></app-grid-item>
     </ng-template>
 
   </p-dataView>

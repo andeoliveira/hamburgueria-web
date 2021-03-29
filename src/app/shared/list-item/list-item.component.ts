@@ -1,6 +1,10 @@
+/*Objetos e Serviços */
 import { ItemDataview } from '../itens/item-dataview';
+
+/*Angular Imports */
 import { FormGroup, FormControl } from '@angular/forms';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -11,8 +15,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 export class ListItemComponent implements OnInit {
 
   @Input() itemDataview:ItemDataview;
-
-  @Output() subtotal: number;
+  @Output() subtotalEvent: EventEmitter<ItemDataview> = new EventEmitter<ItemDataview>();
 
   form = new FormGroup({});
 
@@ -29,7 +32,7 @@ export class ListItemComponent implements OnInit {
     this.form.get('subtotal').setValue(0);
   }
 
-  verificarQuantidadeAdd() {
+  verificarQuantidadeAdd(): void {
 
     this.form.get('itensQuantidade').valueChanges
       .pipe(distinctUntilChanged())
@@ -39,8 +42,15 @@ export class ListItemComponent implements OnInit {
 
   }
 
-  calcularValorSubtotal(quantidade:number) {
+  calcularValorSubtotal(quantidade:number): void {
     this.form.get('subtotal').setValue(quantidade *  this.itemDataview.valor);
+    this.emitirItemTotal();
+  }
+
+  emitirItemTotal(): void{
+    this.itemDataview.quantidadeItens = this.form.get('itensQuantidade').value;
+    this.itemDataview.subtotal = this.form.get('subtotal').value;
+    this.subtotalEvent.emit(this.itemDataview);
   }
 
 }

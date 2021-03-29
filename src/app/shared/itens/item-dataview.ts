@@ -1,4 +1,5 @@
 export interface ItemDataview {
+  itemId?: number;
   titulo?: String;
   descricao?: String;
   valor?: number;
