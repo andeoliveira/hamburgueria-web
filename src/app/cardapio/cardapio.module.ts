@@ -1,5 +1,3 @@
-import { GridItemModule } from './../shared/grid-item/grid-item.module';
-
 /* Angular Imports */
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
@@ -29,6 +27,7 @@ import { CardapioComponent } from './cardapio.component';
 import { LanchePersonalizadoComponent } from './componentes/lanche-personalizado/lanche-personalizado.component';
 import { LancheProntoComponent } from './componentes/lanche-pronto/lanche-pronto.component';
 import { TotalPedidoComponent } from './componentes/total-pedido/total-pedido.component';
+import { GridItemModule } from './../shared/grid-item/grid-item.module';
 
 
 const ROUTES = [

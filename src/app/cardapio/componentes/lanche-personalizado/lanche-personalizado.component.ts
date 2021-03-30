@@ -107,11 +107,13 @@ export class LanchePersonalizadoComponent implements OnInit {
   }
 
   verificarPromocaoLanche(lancheId:number, ingredientes:Ingrediente[]): void {
+    console.log(ingredientes)
     this.lancheService.verificarPromocaoLanche(lancheId, ingredientes)
       .pipe(take(1))
-      .subscribe( (res:LancheValorPromocao) => {
-        this.lancheValorPromocao = res;
-        this.totalPedidoService.atualizarLanches(this.lancheValorPromocao);
+      .subscribe( (resultLanche:LancheValorPromocao) => {
+        this.lancheValorPromocao.lanche.ingredientes = [];
+        console.log(this.lancheValorPromocao.lanche);
+        this.totalPedidoService.atualizarLanches(resultLanche);
       }, error => {
         console.error(error);
       });

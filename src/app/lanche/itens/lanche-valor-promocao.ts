@@ -4,4 +4,5 @@ export interface LancheValorPromocao {
   lanche?: Lanche;
   valor?: number;
   promocoes?: ValorPromocao[];
+  ingredientesLancheStr?: String;
 }
