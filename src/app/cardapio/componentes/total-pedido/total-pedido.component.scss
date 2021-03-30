@@ -1,0 +1,27 @@
+.total-pedido-header {
+  background: var(--blue-500);
+  color: #fff;
+  border: 1px solid #e9ecef;
+  border-width: 1px 0 1px 0;
+  padding: 0.5rem 1rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.item-preco {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: .3rem;
+  align-self: flex-end;
+}
+
+.item-list-action {
+  display: flex;
+  flex-direction: column;
+}
+
+.botao-fechar {
+  text-align: right;
+}
+
+

@@ -1,3 +1,4 @@
+import { TotalPedidoService } from './componentes/total-pedido/total-pedido.service';
 import { Cardapio } from './itens/Cardapio';
 import { LancheValorPromocao } from './../lanche/itens/lanche-valor-promocao';
 import { Component, OnInit } from '@angular/core';
@@ -10,12 +11,13 @@ import { FormControl, FormGroup } from '@angular/forms';
   selector: 'app-cardapio',
   templateUrl: './cardapio.component.html',
   styleUrls: ['./cardapio.component.scss'],
-  providers: [CardapioService]
+  providers: [CardapioService, TotalPedidoService]
 })
 export class CardapioComponent implements OnInit {
 
   lanchesProntos: LancheValorPromocao [] = [];
   lanchePersonalizado: LancheValorPromocao = {};
+  lanchesPersonalizados: LancheValorPromocao[] = [];
   carregando:Boolean = false;
 
   form = new FormGroup({});
@@ -33,7 +35,7 @@ export class CardapioComponent implements OnInit {
 
   }
 
-  carregarTodosLanches() : void {
+  carregarTodosLanches(): void {
 
     this.carregando = true;
 
@@ -47,11 +49,10 @@ export class CardapioComponent implements OnInit {
         this.carregando = false;
       });
 
-
   }
 
 
-  setarLanches(lanches: LancheValorPromocao[]) : void {
+  setarLanches(lanches: LancheValorPromocao[]): void {
 
     let idx = lanches.findIndex(i => i.lanche.nome === 'Lanche Personalizado');
     if (idx) {
@@ -63,6 +64,8 @@ export class CardapioComponent implements OnInit {
     this.lanchesProntos = lanches.filter(lanche => lanche.lanche.nome!== 'Lanche Personalizado');
 
   }
+
+
 
 
 }

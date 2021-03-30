@@ -1,23 +1,28 @@
-import { take } from 'rxjs/operators';
-import { LancheService } from './../../../lanche/services/lanche.service';
-/*Prime NG Components */
-import { SelectItem } from 'primeng/api';
 
 /* Angular Imports */
-import { Component, Input, OnInit } from '@angular/core';
-import { LancheValorPromocao } from 'src/app/lanche/itens/lanche-valor-promocao';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ItemDataview } from 'src/app/shared/itens/item-dataview';
 import { FormGroup, FormControl } from '@angular/forms';
+
+/* Libs */
+import { take } from 'rxjs/operators';
+
+/*Prime NG Components */
+import { SelectItem } from 'primeng/api';
 
 /* Objetos e Serviços */
 import { Ingrediente } from './../../../ingrediente/modelos/ingrediente';
 import { IngredienteService } from './../../../ingrediente/services/ingrediente.service';
+import { LancheService } from './../../../lanche/services/lanche.service';
+import { LancheValorPromocao } from 'src/app/lanche/itens/lanche-valor-promocao';
+import { ItemService } from '../../../shared/itens/item.service';
+import { TotalPedidoService } from './../total-pedido/total-pedido.service';
 
 @Component({
   selector: 'app-lanche-personalizado',
   templateUrl: './lanche-personalizado.component.html',
   styleUrls: ['./lanche-personalizado.component.scss'],
-  providers: [IngredienteService, LancheService]
+  providers: [IngredienteService, LancheService, ItemService]
 })
 export class LanchePersonalizadoComponent implements OnInit {
 
@@ -34,7 +39,9 @@ export class LanchePersonalizadoComponent implements OnInit {
   form: FormGroup = new FormGroup({});
 
   constructor(private ingredienteService: IngredienteService,
-              private lancheService: LancheService) {
+              private lancheService: LancheService,
+              private itemService: ItemService,
+              private totalPedidoService: TotalPedidoService) {
     this.form = new FormGroup({
       itemOrdem: new FormControl('')
     });
@@ -68,28 +75,55 @@ export class LanchePersonalizadoComponent implements OnInit {
 
   subtotal(itemDataview: ItemDataview): void {
     if (itemDataview) {
-      this.gerarIngredientes(itemDataview.itemId, itemDataview.quantidadeItens);
+      this.montarLanchePersonalizado(itemDataview.itemId, itemDataview.quantidadeItens);
     }
   }
 
-  gerarIngredientes(ingredienteId: number, quantidadeIngrediente: number): void {
+  montarLanchePersonalizado(ingredienteId: number, quantidade: number): void {
 
     const ingrediente:Ingrediente = this.ingredientes.find(i => i.id === ingredienteId);
-    this.lancheValorPromocao.lanche.ingredientes = [];
 
-    for (let index = 1; index <= quantidadeIngrediente; index++) {
-      this.lancheValorPromocao.lanche.ingredientes.push(ingrediente);
+    if (ingrediente) {
+
+      const ingredienteJaAdicionado = this.lancheValorPromocao.lanche.ingredientes.find(ing => ing.id === ingrediente.id);
+
+      if (ingredienteJaAdicionado) {
+
+        this.lancheValorPromocao.lanche.ingredientes = this.lancheValorPromocao.lanche.ingredientes.filter(ing => ing.id !== ingredienteJaAdicionado.id);
+        this.adicionaIngredientePelaQuantidade(ingrediente, quantidade)
+
+      } else {
+        this.adicionaIngredientePelaQuantidade(ingrediente, quantidade)
+      }
+
     }
 
-    this.verificarPromocaoLanche();
   }
 
-  verificarPromocaoLanche() {
-    this.lancheService.verificarPromocaoLanche(this.lancheValorPromocao.lanche.id, this.lancheValorPromocao.lanche.ingredientes)
+  adicionaIngredientePelaQuantidade(ingrediente:Ingrediente, quantidade:number): void {
+    for (let index = 1; index <= quantidade; index++) {
+      this.lancheValorPromocao.lanche.ingredientes.push(ingrediente);
+    }
+  }
+
+  verificarPromocaoLanche(lancheId:number, ingredientes:Ingrediente[]): void {
+    this.lancheService.verificarPromocaoLanche(lancheId, ingredientes)
       .pipe(take(1))
-      .subscribe(res => {
-        console.log(res)
-      })
+      .subscribe( (res:LancheValorPromocao) => {
+        this.lancheValorPromocao = res;
+        this.totalPedidoService.atualizarLanches(this.lancheValorPromocao);
+      }, error => {
+        console.error(error);
+      });
+  }
+
+  verificarPromocaoEadicionarLanche():void {
+    this.verificarPromocaoLanche(this.lancheValorPromocao.lanche.id, this.lancheValorPromocao.lanche.ingredientes);
+    this.resetarForm();
+  }
+
+  resetarForm() {
+    this.itemService.resetarCamposItensESubtotal.emit(true);
   }
 
   converterParaItemDataView(ingrediente:Ingrediente):ItemDataview {

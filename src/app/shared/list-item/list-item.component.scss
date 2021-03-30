@@ -37,3 +37,38 @@
   width: 80px;
   max-width: 80px;
 }
+
+
+@media screen and (max-width: 576px) {
+  .item-list-item {
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      width: 75%;
+      margin: 2rem 0;
+    }
+
+    .item-list-detail {
+      text-align: center;
+    }
+
+    .item-preco {
+      align-self: center;
+    }
+
+    .item-list-action {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .item-list-action {
+      margin-top: 2rem;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  }
+  }
+

@@ -1,10 +1,12 @@
-/*Objetos e Serviços */
-import { ItemDataview } from '../itens/item-dataview';
-
 /*Angular Imports */
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+/*Objetos e Serviços */
+import { ItemDataview } from '../itens/item-dataview';
+import { ItemService } from '../itens/item.service';
+
+/*Libs*/
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -19,13 +21,14 @@ export class ListItemComponent implements OnInit {
 
   form = new FormGroup({});
 
-  constructor() {
+  constructor(private itemService: ItemService) {
     this.form = new FormGroup({
       itensQuantidade: new FormControl(''),
       subtotal: new FormControl('')
     });
 
     this.verificarQuantidadeAdd();
+    this.verificarResetCampos();
   }
 
   ngOnInit(): void {
@@ -47,10 +50,19 @@ export class ListItemComponent implements OnInit {
     this.emitirItemTotal();
   }
 
-  emitirItemTotal(): void{
+  emitirItemTotal():void {
     this.itemDataview.quantidadeItens = this.form.get('itensQuantidade').value;
     this.itemDataview.subtotal = this.form.get('subtotal').value;
     this.subtotalEvent.emit(this.itemDataview);
+  }
+
+  verificarResetCampos() :void {
+    this.itemService.resetarCamposItensESubtotal.subscribe((reset:boolean)  => {
+      if(reset) {
+        this.form.get('itensQuantidade').setValue(0);
+        this.form.get('subtotal').setValue(0)
+      }
+    });
   }
 
 }

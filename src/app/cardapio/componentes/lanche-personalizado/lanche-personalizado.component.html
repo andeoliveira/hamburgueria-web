@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="card" *ngIf="lancheValorPromocao && lancheValorPromocao.lanche && ingredientes && ingredientes.length > 0">
   <div class="lanche-personalizado-header">
-    <h3 class="p-text-center">Personalize o Lanche:</h3>
+    <h3 class="p-text-center">Personalize o lanche:</h3>
   </div>
   <!-- Componente DataView - Lista de Registros-->
   <p-dataView #dv  [value]="ingredientes" [paginator]="false" [rows]="9" filterBy="nome" [loading]="carregando"
@@ -31,6 +31,13 @@
       <app-grid-item [itemDataview]="converterParaItemDataView(ingrediente)" (subtotalEvent)="subtotal($event)" class="p-col-12 p-md-4"></app-grid-item>
     </ng-template>
 
+
   </p-dataView>
+
+  <div class="p-d-flex">
+    <div style="margin-left: auto; margin-bottom: 20px; padding: 1rem 1.5rem;">
+     <p-button icon="pi pi-shopping-cart" [disabled]="false" label="Adicionar" (click)="verificarPromocaoEadicionarLanche()"></p-button>
+    </div>
+  </div>
 
 </form>

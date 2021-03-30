@@ -1,16 +1,20 @@
 
   <form [formGroup]="form" class="item-list-item">
+
     <img *ngIf="itemDataview.imagem" [src]="itemDataview.imagem" [alt]="itemDataview.imagem"/>
+
     <div class="item-list-detalhe">
       <div class="item-nome">{{itemDataview.titulo}}</div>
       <div class="item-descricao">{{itemDataview.descricao}}</div>
       <i class="pi pi-tag item-categoria-icon"></i>
       <span class="item-categoria">{{itemDataview.valor | currency:'BRL'}}</span>
     </div>
+    
     <div class="item-list-action p-field p-md-3">
       <label for="minmax" class="p-text-right">Quantidade:</label>
       <p-inputNumber class="p-text-right" formControlName="itensQuantidade" spinnerMode="horizontal" inputId="minmax" inputId="minmax" [showButtons]="true" [min]="0" [max]="100"></p-inputNumber>
       <p class="p-text-right"><span  class="item-preco">Subtotal: {{form.get('subtotal').value | currency:'BRL'}}</span></p>
     </div>
+
   </form>
 

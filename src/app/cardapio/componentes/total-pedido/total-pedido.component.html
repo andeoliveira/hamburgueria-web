@@ -1,0 +1,36 @@
+<div class="total-pedido-header">
+  <h3 class="p-text-center">Total do pedido:</h3>
+</div>
+
+<p-card>
+
+  <div class="p-d-flex p-flex-wrap p-flex-md-row">
+
+    <div class="p-mr-6 p-flex-column">
+
+      <div class="p-mb-2">
+        <div class="item-nome">Lanches Prontos:</div>
+        <div class="item-descricao"><i>X-Egg</i></div>
+      </div>
+
+      <div class="p-mb-2">
+        <div class="item-nome">Lanches personalizados:</div>
+        <div class="item-descricao" *ngIf="lanchesPersonalizados && lanchesPersonalizados.length">
+          <p-chip *ngFor="let lanche of lanchesPersonalizados" label="{{lanche.lanche.nome}}" [removable]="true"></p-chip>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="p-mr-6" style="margin-left: auto;">
+      <p class="p-text-right"><span  class="item-preco">Total: {{50 | currency:'BRL'}}</span></p>
+      <p-button class="botao-fechar" icon="pi pi-shopping-cart" [disabled]="false" label="Fechar pedido"></p-button>
+    </div>
+
+
+
+  </div>
+
+</p-card>
+

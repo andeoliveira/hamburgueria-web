@@ -1,3 +1,4 @@
+import { ItemService } from './../itens/item.service';
 
 /*Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
@@ -18,13 +19,14 @@ export class GridItemComponent implements OnInit {
 
   form = new FormGroup({});
 
-  constructor() {
+  constructor(private itemService: ItemService) {
     this.form = new FormGroup({
       itensQuantidade: new FormControl(''),
       subtotal: new FormControl('')
     });
 
     this.verificarQuantidadeAdd();
+    this.verificarResetCampos();
   }
 
   ngOnInit(): void {
@@ -50,6 +52,15 @@ export class GridItemComponent implements OnInit {
     this.itemDataview.quantidadeItens = this.form.get('itensQuantidade').value;
     this.itemDataview.subtotal = this.form.get('subtotal').value;
     this.subtotalEvent.emit(this.itemDataview);
+  }
+
+  verificarResetCampos() :void {
+    this.itemService.resetarCamposItensESubtotal.subscribe((reset:boolean)  => {
+      if(reset) {
+        this.form.get('itensQuantidade').setValue(0);
+        this.form.get('subtotal').setValue(0)
+      }
+    });
   }
 
 }

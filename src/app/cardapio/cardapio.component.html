@@ -4,8 +4,7 @@
     <h2 class="p-text-bold">Cardápio</h2>
     <app-lanche-pronto *ngIf="lanchesProntos && lanchesProntos.length > 0" [lanches]="lanchesProntos"></app-lanche-pronto>
   </div>
+  <app-lanche-personalizado  *ngIf="lanchePersonalizado && lanchePersonalizado.lanche" [lancheValorPromocao]="lanchePersonalizado"></app-lanche-personalizado>
+  <app-total-pedido></app-total-pedido>
 
-  <div>
-    <app-lanche-personalizado  *ngIf="lanchePersonalizado && lanchePersonalizado.lanche" [lancheValorPromocao]="lanchePersonalizado"></app-lanche-personalizado>
-  </div>
 </form>

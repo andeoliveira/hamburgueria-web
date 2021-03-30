@@ -18,6 +18,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {RatingModule} from 'primeng/rating';
 import {RippleModule} from 'primeng/ripple';
 import {InputNumberModule} from 'primeng/inputnumber';
+import {CardModule} from 'primeng/card';
+import {ChipModule} from 'primeng/chip';
 
 /* Componentes Compartilhados */
 import { ListItemModule } from './../shared/list-item/list-item.module';
@@ -26,6 +28,7 @@ import { ListItemModule } from './../shared/list-item/list-item.module';
 import { CardapioComponent } from './cardapio.component';
 import { LanchePersonalizadoComponent } from './componentes/lanche-personalizado/lanche-personalizado.component';
 import { LancheProntoComponent } from './componentes/lanche-pronto/lanche-pronto.component';
+import { TotalPedidoComponent } from './componentes/total-pedido/total-pedido.component';
 
 
 const ROUTES = [
@@ -38,7 +41,8 @@ const ROUTES = [
   declarations: [
     CardapioComponent,
     LanchePersonalizadoComponent,
-    LancheProntoComponent
+    LancheProntoComponent,
+    TotalPedidoComponent
   ],
   imports: [
     RouterModule.forChild(ROUTES),
@@ -56,7 +60,9 @@ const ROUTES = [
     RatingModule,
     InputNumberModule,
     ListItemModule,
-    GridItemModule
+    GridItemModule,
+    CardModule,
+    ChipModule
 
   ],
   exports:[
