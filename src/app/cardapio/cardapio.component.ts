@@ -14,7 +14,6 @@ import { take } from 'rxjs/operators';
 
 /* Objetos e Serviços */
 import { CardapioService } from './services/cardapio.service';
-import { Cardapio } from './itens/Cardapio';
 import { LancheValorPromocao } from './../lanche/itens/lanche-valor-promocao';
 import { ItemService } from './../shared/itens/item.service';
 import { LancheService } from './../lanche/services/lanche.service';
@@ -58,7 +57,7 @@ export class CardapioComponent implements OnInit {
 
     this.cardapioService.carregarCardapio()
       .pipe(take(1))
-      .subscribe((cardapio:Cardapio) => {
+      .subscribe(cardapio => {
         this.setarLanches(cardapio.lanches);
       }, error => {
         console.error(error);
