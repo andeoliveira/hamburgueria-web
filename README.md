@@ -1,4 +1,4 @@
-# Hamburgueria - Web (Frontend - Anderson)
+# Hambúrgueria - Web (Frontend - Anderson)
 
 ## Tecnologias aplicadas ao projeto
 
