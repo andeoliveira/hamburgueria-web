@@ -11,20 +11,20 @@
 
       <div class="p-mb-2">
         <div class="item-nome">Lanches prontos:</div>
-        <div class="item-descricao">
-          <p-chip *ngFor="let lanche of lanchesProntos; let i = index" label="{{i +1}} - {{ lanche.lanche.nome}}"
-          [removable]="true" (onRemove)="removerLanchePersonalizado(i)"  ></p-chip>
+        <div class="item-descricao" *ngIf="lanchesProntos && lanchesProntos.length > 0">
+          <p-chip *ngFor="let lanche of lanchesProntos; let index = index;" label="{{index +1}} - {{ lanche.lanche.nome}}"
+            label="{{lanche.lanche.nome}}" [removable]="true" (onRemove)="removerLanche(index, 0)" title="{{lanche.ingredientesLancheStr}}" >
+          </p-chip>
         </div>
       </div>
 
       <div class="p-mb-2">
         <div class="item-nome">Lanches personalizados:</div>
-        <div class="item-descricao" *ngIf="lanchesPersonalizados && lanchesPersonalizados.length">
-          <p-chip *ngFor="let lanche of lanchesPersonalizados; let i = index" label="{{i +1}} - {{ lanche.lanche.nome}}"
-          [removable]="true" (onRemove)="removerLanchePersonalizado(i)" title="{{lanche.ingredientesLancheStr}}" ></p-chip>
+        <div class="item-descricao" *ngIf="lanchesPersonalizados && lanchesPersonalizados.length > 0">
+          <p-chip *ngFor="let lanche of lanchesPersonalizados; let i = index" label="{{i +1}} - {{ lanche.lanche.nome}} - {{lanche.ingredientesLancheStr}}"
+          [removable]="true" (onRemove)="removerLanche(i, 1)" title="{{lanche.ingredientesLancheStr}}" ></p-chip>
         </div>
       </div>
-
 
     </div>
 
@@ -40,8 +40,8 @@
         <span  class="item-preco" style="color:green">{{form.get('promocoesPedido').value}}</span>
       </p>
       <p class="p-text-right"><span  class="item-preco">Total: {{form.get('totalPedido').value | currency:'BRL'}}</span></p>
-      <p-button class="botao-fechar" icon="pi pi-shopping-cart" [disabled]="false" label="Fechar pedido"></p-button>
-      
+      <p-button class="botao-fechar" icon="pi pi-shopping-cart" [disabled]="false" label="Fechar pedido" (click)="fecharPedido()"></p-button>
+
     </div>
 
 
@@ -49,4 +49,7 @@
   </div>
 
 </p-card>
+
+<p-confirmDialog header="Confirmação" icon="pi pi-shopping-cart" acceptLabel="Sim" rejectLabel="Não"></p-confirmDialog>
+<p-toast position="top-right"></p-toast>
 </form>

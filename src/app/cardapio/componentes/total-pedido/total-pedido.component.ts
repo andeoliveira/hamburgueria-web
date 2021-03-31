@@ -1,8 +1,17 @@
+import { MessageService } from 'primeng/api';
+/* Angular Imports */
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+
+/*Prime NG Componentes */
+import { ConfirmationService } from 'primeng/api';
+
+/* Libs */
+import { Subscription } from 'rxjs';
+
+/* Objetos e Serviços */
 import { Ingrediente } from './../../../ingrediente/modelos/ingrediente';
 import { LancheValorPromocao } from './../../../lanche/itens/lanche-valor-promocao';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { TotalPedidoService } from './total-pedido.service';
 
 @Component({
@@ -13,13 +22,17 @@ import { TotalPedidoService } from './total-pedido.service';
 })
 export class TotalPedidoComponent implements OnInit, OnDestroy {
 
-  subscription$:Subscription;
-  lanchesProntos:LancheValorPromocao[];
+  subscriptionLanchePersonalizado$:Subscription;
+  subscriptionLanchesProntos$:Subscription;
+  lanchesProntos:LancheValorPromocao[] = [];
   lanchesPersonalizados:LancheValorPromocao[] = [];
+  lanches:LancheValorPromocao[] = [];
 
   form: FormGroup = new FormGroup({});
 
-  constructor(private totalPedidoService: TotalPedidoService) {
+  constructor(private totalPedidoService: TotalPedidoService,
+              private confirmationService: ConfirmationService,
+              private messageService: MessageService) {
     this.form = new FormGroup({
       subtotalPedido: new FormControl(''),
       descontoPedido: new FormControl(''),
@@ -30,28 +43,29 @@ export class TotalPedidoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.verificarLancheAdicionado();
-    if (this.lanchesProntos || this.lanchesPersonalizados)
-    this.somarValorPedido();
   }
 
   ngOnDestroy() {
-    this.subscription$.unsubscribe();
+    this.subscriptionLanchesProntos$.unsubscribe();
+    this.subscriptionLanchePersonalizado$.unsubscribe();
   }
 
   somarValorPedido(): void {
 
-    if (this.lanchesPersonalizados && this.lanchesPersonalizados.length > 0) {
+    let lanches:LancheValorPromocao[] = [];
+
+    lanches = [...this.lanchesProntos, ...this.lanchesPersonalizados];
+
+    if (lanches && lanches.length > 0) {
 
       let subtotalPedido: number = 0;
       let descontoPedido: number = 0;
-      let promocoesNome:String[] = [];
+      let promocoesNome: String[] = [];
 
-      this.lanchesPersonalizados.forEach(lanchePersonalizado => {
+      lanches.forEach(lanchePersonalizado => {
 
         subtotalPedido += lanchePersonalizado.valor;
-
         if (lanchePersonalizado.promocoes) {
-
           lanchePersonalizado.promocoes.forEach(promo => {
 
             if (promo.promocao) {
@@ -69,32 +83,53 @@ export class TotalPedidoComponent implements OnInit, OnDestroy {
         }
 
       });
-
-      const total:number = subtotalPedido - descontoPedido
-      this.form.get('totalPedido').setValue(total);
-      this.form.get('subtotalPedido').setValue(subtotalPedido);
-      this.form.get('descontoPedido').setValue(descontoPedido);
+      this.setTotaisForm(subtotalPedido, descontoPedido);
 
     }
+
+  }
+
+  setTotaisForm(subtotalPedido: number, descontoPedido: number) {
+
+    this.form.get('totalPedido').setValue(subtotalPedido - descontoPedido);
+    this.form.get('subtotalPedido').setValue(subtotalPedido);
+    this.form.get('descontoPedido').setValue(descontoPedido);
+
   }
 
   verificarLancheAdicionado(): void {
 
-    this.subscription$ = this.totalPedidoService.lanche
-      .subscribe(
-        (subLancheValor: LancheValorPromocao) => {
-        if (subLancheValor) {
-          if (subLancheValor.lanche.nome !== 'Lanche Personalizado') {
-            this.lanchesProntos.push(subLancheValor);
-          } else {
-            subLancheValor.ingredientesLancheStr = "";
-            subLancheValor.ingredientesLancheStr = this.montarStringIngredientesNome(subLancheValor.lanche.ingredientes);
-            this.lanchesPersonalizados.push(subLancheValor);
-          }
-          this.somarValorPedido();
+    this.subscriptionLanchePersonalizado$ = this.totalPedidoService.lanchePersonalizado
+      .subscribe((subLanchePersonalizado: LancheValorPromocao) => {
+        if (subLanchePersonalizado) {
+          this.atualizarLanchePersonalizado(subLanchePersonalizado)
         }
-      }
-    )
+      });
+
+    this.subscriptionLanchesProntos$ = this.totalPedidoService.lanchesProntos
+      .subscribe((subLanchesProntos: LancheValorPromocao[]) => {
+        this.atualizarLanchesProntos(subLanchesProntos)
+      });
+  }
+
+  atualizarLanchePersonalizado(subLanchePersonalizado: LancheValorPromocao): void {
+
+    subLanchePersonalizado.ingredientesLancheStr = "";
+    subLanchePersonalizado.ingredientesLancheStr = this.montarStringIngredientesNome(subLanchePersonalizado.lanche.ingredientes);
+    this.lanchesPersonalizados.push(subLanchePersonalizado);
+    this.somarValorPedido()
+
+  }
+
+  atualizarLanchesProntos(subLanchesProntos: LancheValorPromocao[]): void {
+
+    if (subLanchesProntos) {
+
+      const lanchetemp = [...this.lanchesProntos, ...subLanchesProntos]
+      this.lanchesProntos = JSON.parse(JSON.stringify(lanchetemp));
+
+      this.somarValorPedido()
+    }
 
   }
 
@@ -104,7 +139,6 @@ export class TotalPedidoComponent implements OnInit, OnDestroy {
     let ingredientesNomes = [];
     nomeIngredientesLanche = ingredientes.map(i => i.nome);
     ingredientesNomes = Array.from(new Set(nomeIngredientesLanche));
-
 
     for (let index = 0; index < ingredientesNomes.length; index++) {
       const element = nomeIngredientesLanche.filter( ing => ing === ingredientesNomes[index]).length;
@@ -118,13 +152,36 @@ export class TotalPedidoComponent implements OnInit, OnDestroy {
 
   }
 
-  removerLanchePersonalizado(idx: number): void {
-    this.lanchesPersonalizados.splice(idx, 1);
+
+  removerLanche(idx: number, tipo: number): void {
+
+    if (tipo === 0) {
+      this.lanchesProntos.splice(idx, 1);
+    } else {
+      this.lanchesPersonalizados.splice(idx, 1);
+    }
+
     this.resetarForm();
     this.somarValorPedido();
+
   }
 
-  resetarForm() {
+  fecharPedido(): void {
+    if (this.form.get('totalPedido').value && this.form.get('totalPedido').value > 0) {
+      this.confirmationService.confirm({
+        message: 'Deseja fechar o pedido?',
+        accept: () => {
+
+          this.messageService.add({severity:'success', summary: 'Sucesso', detail: 'Pedido salvo com sucesso'});
+          this.resetarForm();
+          this.lanchesPersonalizados = [];
+          this.lanchesProntos = [];
+        }
+    });
+    }
+  }
+
+  resetarForm(): void {
     this.form.reset();
     this.form.get('totalPedido').setValue(0);
   }

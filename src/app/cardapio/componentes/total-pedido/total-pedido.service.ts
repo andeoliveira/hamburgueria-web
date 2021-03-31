@@ -7,12 +7,19 @@ import { EventEmitter, Injectable } from "@angular/core";
 export class TotalPedidoService {
 
   private adicionarLancheTotal = new BehaviorSubject<LancheValorPromocao>(null);
-  lanche = this.adicionarLancheTotal.asObservable();
+  private adicionarLanchesProntos = new BehaviorSubject<LancheValorPromocao[]>(null);
+
+  lanchePersonalizado = this.adicionarLancheTotal.asObservable();
+  lanchesProntos = this.adicionarLanchesProntos.asObservable();
 
   constructor(){}
 
   atualizarLanches(lanche: LancheValorPromocao) {
     this.adicionarLancheTotal.next(lanche);
+  }
+
+  atualizarLanchesProntos(lanchesValorPromo: LancheValorPromocao[]) {
+    this.adicionarLanchesProntos.next(lanchesValorPromo);
   }
 
 }

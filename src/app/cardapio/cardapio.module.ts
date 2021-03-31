@@ -18,6 +18,8 @@ import {RippleModule} from 'primeng/ripple';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {CardModule} from 'primeng/card';
 import {ChipModule} from 'primeng/chip';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ToastModule} from 'primeng/toast';
 
 /* Componentes Compartilhados */
 import { ListItemModule } from './../shared/list-item/list-item.module';
@@ -61,7 +63,9 @@ const ROUTES = [
     ListItemModule,
     GridItemModule,
     CardModule,
-    ChipModule
+    ChipModule,
+    ConfirmDialogModule,
+    ToastModule
 
   ],
   exports:[

@@ -21,13 +21,20 @@
 
   <ng-template let-lanchevalorpromo pTemplate="listItem">
     <!-- Componente de visualização em Lista - único por linha-->
-    <app-list-item [itemDataview]="converterParaItemDataView(lanchevalorpromo)" class="p-col-12"></app-list-item>
+    <app-list-item [itemDataview]="converterParaItemDataView(lanchevalorpromo)" (subtotalEvent)="subtotal($event)" class="p-col-12"></app-list-item>
   </ng-template>
 
   <ng-template let-lanchevalorpromo pTemplate="gridItem">
     <!-- Componente de visualização em Grid - vários por linha-->
-    <app-grid-item [itemDataview]="converterParaItemDataView(lanchevalorpromo)" class="p-col-12 p-md-4"></app-grid-item>
+    <app-grid-item [itemDataview]="converterParaItemDataView(lanchevalorpromo)" (subtotalEvent)="subtotal($event)" class="p-col-12 p-md-4"></app-grid-item>
   </ng-template>
 
   </p-dataView>
+
+  <div class="p-d-flex">
+    <div style="margin-left: auto; margin-bottom: 20px; padding: 1rem 1.5rem;">
+     <p-button icon="pi pi-shopping-cart" [disabled]="false" label="Adicionar" (click)="adicionarLanchesPedido()"></p-button>
+    </div>
+  </div>
+
 </form>

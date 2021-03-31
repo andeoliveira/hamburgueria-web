@@ -1,8 +1,19 @@
-import { FormGroup, FormControl } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
-import { LancheValorPromocao } from './../../../lanche/itens/lanche-valor-promocao';
+import { ItemService } from './../../../shared/itens/item.service';
+/* Angular Imports */
 import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+
+/* Componentes */
 import { ItemDataview } from 'src/app/shared/itens/item-dataview';
+
+/* Prime NG Componentes */
+import { SelectItem } from 'primeng/api';
+
+/* Objetos e Serviços */
+import { LancheValorPromocao } from './../../../lanche/itens/lanche-valor-promocao';
+import { Lanche } from './../../../lanche/modelos/lanche';
+import { TotalPedidoService } from './../total-pedido/total-pedido.service';
+import { LancheService } from './../../../lanche/services/lanche.service';
 
 @Component({
   selector: 'app-lanche-pronto',
@@ -12,6 +23,7 @@ import { ItemDataview } from 'src/app/shared/itens/item-dataview';
 export class LancheProntoComponent implements OnInit {
 
   @Input() lanches: LancheValorPromocao[];
+  lanchesPedido: LancheValorPromocao[] = [];
 
   /* Configurações do Data View */
   opcoesOrdenacao: SelectItem[];
@@ -21,7 +33,9 @@ export class LancheProntoComponent implements OnInit {
 
   form = new FormGroup({});
 
-  constructor() {
+  constructor(private lancheService: LancheService,
+              private totalPedidoService: TotalPedidoService,
+              private itemService: ItemService) {
     this.form = new FormGroup({
       itemOrdem: new FormControl('')
     });
@@ -36,7 +50,7 @@ export class LancheProntoComponent implements OnInit {
     this.ordenacao = -1;
   }
 
-  ordenacaoTipo(event) {
+  ordenacaoTipo(event): void {
     let value = event.value;
 
     if (value.indexOf('!') === 0) {
@@ -49,8 +63,46 @@ export class LancheProntoComponent implements OnInit {
     }
   }
 
+  subtotal(itemDataview: ItemDataview): void {
+    if (itemDataview) {
+      this.adicionarLanchePronto(itemDataview.itemId, itemDataview.quantidadeItens);
+    }
+  }
 
-  converterParaItemDataView(lanche:LancheValorPromocao):ItemDataview {
+  adicionarLanchePronto(lancheid: number, quantidade: number) {
+
+    const lancheValorPromo:LancheValorPromocao  = this.lanches.find(i => i.lanche.id === lancheid);
+    const lancheJaAdicionado = this.lanchesPedido.find(l => l.lanche.id === lancheValorPromo.lanche.id);
+
+    if (lancheJaAdicionado) {
+        this.lanchesPedido = this.lanchesPedido.filter(l => l.lanche.id !== lancheJaAdicionado.lanche.id);
+        this.adicionaLanchePelaQuantidade(lancheValorPromo, quantidade);
+      } else {
+        this.adicionaLanchePelaQuantidade(lancheValorPromo, quantidade);
+      }
+
+  }
+
+  adicionaLanchePelaQuantidade(lancheValorPromo:LancheValorPromocao, quantidade:number): void {
+    for (let index = 1; index <= quantidade; index++) {
+      this.lanchesPedido.push(lancheValorPromo);
+    }
+  }
+
+  adicionarLanchesPedido(): void {
+
+    if (this.lanchesPedido && this.lanchesPedido.length > 0) {
+      this.totalPedidoService.atualizarLanchesProntos(this.lanchesPedido);
+    }
+    this.resetarForm();
+
+  }
+
+  resetarForm(): void {
+    this.itemService.resetarCamposItensESubtotal.emit(true);
+  }
+
+  converterParaItemDataView(lanche: LancheValorPromocao): ItemDataview {
 
     const itemDataview:ItemDataview = {
       descricao : lanche.lanche.ingredientes ? lanche.lanche.ingredientes.map(ing => ing.nome).join(', ') : null,

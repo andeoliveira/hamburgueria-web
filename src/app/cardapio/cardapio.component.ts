@@ -1,17 +1,33 @@
-import { TotalPedidoService } from './componentes/total-pedido/total-pedido.service';
+
+/*Angular Componentes*/
+import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+
+/* Prime NG Componentes */
+import { PrimeNGConfig } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+
+
+/* Libs */
+import { take } from 'rxjs/operators';
+
+/* Objetos e Serviços */
+import { CardapioService } from './services/cardapio.service';
 import { Cardapio } from './itens/Cardapio';
 import { LancheValorPromocao } from './../lanche/itens/lanche-valor-promocao';
-import { Component, OnInit } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
-import { CardapioService } from './services/cardapio.service';
-import { take } from 'rxjs/operators';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ItemService } from './../shared/itens/item.service';
+import { LancheService } from './../lanche/services/lanche.service';
+import { TotalPedidoService } from './componentes/total-pedido/total-pedido.service';
+
+
+
 
 @Component({
   selector: 'app-cardapio',
   templateUrl: './cardapio.component.html',
   styleUrls: ['./cardapio.component.scss'],
-  providers: [CardapioService, TotalPedidoService]
+  providers: [CardapioService, TotalPedidoService, LancheService, ItemService, ConfirmationService, MessageService]
 })
 export class CardapioComponent implements OnInit {
 
@@ -22,7 +38,8 @@ export class CardapioComponent implements OnInit {
 
   form = new FormGroup({});
 
-  constructor(private primengConfig: PrimeNGConfig, private cardapioService: CardapioService) {
+  constructor(private primengConfig: PrimeNGConfig,
+              private cardapioService: CardapioService) {
     this.form = new FormGroup({
       itemOrdem: new FormControl('')
     });

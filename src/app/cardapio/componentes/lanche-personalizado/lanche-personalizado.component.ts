@@ -22,7 +22,7 @@ import { TotalPedidoService } from './../total-pedido/total-pedido.service';
   selector: 'app-lanche-personalizado',
   templateUrl: './lanche-personalizado.component.html',
   styleUrls: ['./lanche-personalizado.component.scss'],
-  providers: [IngredienteService, LancheService, ItemService]
+  providers: [IngredienteService]
 })
 export class LanchePersonalizadoComponent implements OnInit {
 
@@ -86,7 +86,6 @@ export class LanchePersonalizadoComponent implements OnInit {
     if (ingrediente) {
 
       const ingredienteJaAdicionado = this.lancheValorPromocao.lanche.ingredientes.find(ing => ing.id === ingrediente.id);
-
       if (ingredienteJaAdicionado) {
 
         this.lancheValorPromocao.lanche.ingredientes = this.lancheValorPromocao.lanche.ingredientes.filter(ing => ing.id !== ingredienteJaAdicionado.id);
@@ -107,12 +106,10 @@ export class LanchePersonalizadoComponent implements OnInit {
   }
 
   verificarPromocaoLanche(lancheId:number, ingredientes:Ingrediente[]): void {
-    console.log(ingredientes)
     this.lancheService.verificarPromocaoLanche(lancheId, ingredientes)
       .pipe(take(1))
       .subscribe( (resultLanche:LancheValorPromocao) => {
         this.lancheValorPromocao.lanche.ingredientes = [];
-        console.log(this.lancheValorPromocao.lanche);
         this.totalPedidoService.atualizarLanches(resultLanche);
       }, error => {
         console.error(error);
