@@ -30,6 +30,7 @@ import { LanchePersonalizadoComponent } from './componentes/lanche-personalizado
 import { LancheProntoComponent } from './componentes/lanche-pronto/lanche-pronto.component';
 import { TotalPedidoComponent } from './componentes/total-pedido/total-pedido.component';
 import { GridItemModule } from './../shared/grid-item/grid-item.module';
+import { PromocaoComponent } from './componentes/promocao/promocao.component';
 
 
 const ROUTES = [
@@ -43,7 +44,8 @@ const ROUTES = [
     CardapioComponent,
     LanchePersonalizadoComponent,
     LancheProntoComponent,
-    TotalPedidoComponent
+    TotalPedidoComponent,
+    PromocaoComponent
   ],
   imports: [
     RouterModule.forChild(ROUTES),
